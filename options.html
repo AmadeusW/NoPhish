@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NoPhish - Options</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css"></link>
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css"></link>
+</head>
+<body>
+	<div class="container">
+
+		<h1>NoPhish - Options</h1>
+
+		<div class="alert alert-success" style="display: none" id="saveSuccessful">
+			Settings Saved
+		</div>
+
+		<div class="from-group">
+			<label>Tracked Domains</label>
+			<textarea class="form-control" id="trackedDomains" style="height:150px">
+			</textarea>
+		</div>
+		<br/>
+		<div class="form-group">
+			<button class="btn btn-success" id="save">Save</button>
+			<button class="btn btn-warning" id="reloadDefaults">Reload Defaults</button>
+
+		</div>
+		<script src="options.js"></script>
+	</div>
+</body>
+</html>

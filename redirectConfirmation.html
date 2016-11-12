@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NoPhish - Verification</title>
+	<script src="redirectConfirmation.js"></script>
+	<link rel="stylesheet" href="css/bootstrap.min.css"></link>
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css"></link>
+</head>
+
+<body>
+	<div class="container">
+		<h3>NoPhish - Verification</h3>
+		<div class="panel panel-default">
+				<div class="panel-body">
+				<span style="font-weight:bold" id="forwarder"></span>
+				<span>wants to redirect you to</span>
+				<div >
+					<code style="word-wrap:break-word" id="url"></code>
+				</div>
+				<br/>
+				<div class="actions">
+					<button class="btn btn-primary" id="cmdContinue">Continue</button>
+					<button class="btn btn-default" id="cmdCancel">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
