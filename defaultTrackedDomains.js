@@ -53,6 +53,7 @@ var defaultTrackedDomains = [
 	'surl.co.uk',
 	'tighturl.com',
 	'tinylink.com',
+	'tinyurl.com',
 	'traceurl.com',
 	'tr.im',
 	'twurl.nl',
