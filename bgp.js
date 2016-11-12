@@ -49,7 +49,9 @@ function loadConfig() {
     }
   })
 }
-
+chrome.browserAction.onClicked.addListener(function() {
+  chrome.tabs.create({url: "options.html"});
+});
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     var senderUrl = document.createElement('a');

@@ -1,8 +1,12 @@
 {
   "name": "NoPhish",
-  "version": "0.1",
+  "version": "0.2",
   "description": "Allows you to verify where URL Shortners redirects you",
   "manifest_version": 2,
+  "browser_action": {
+    "default_icon": "img/icon128.png",
+    "default_title": "NoPhish"
+  },
   "icons": {
     "16": "img/icon16.png",
     "48": "img/icon48.png",
@@ -13,7 +17,7 @@
   ],
   "options_page": "options.html",
   "background": {
-    "scripts": ["bgp.js", "defaultTrackedDomains.js"],
+    "scripts": ["defaultTrackedDomains.js", "bgp.js"],
     "persistent": true
   },
   "web_accessible_resources": [
