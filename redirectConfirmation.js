@@ -1,12 +1,14 @@
 var params = {}
 var divUrl = null;
 var divForwarder = null;
+var imgForwarder = null;
 var cmdContinue = null;
 var cmdCancel = null;
 function load() {
 	params = getQueryParams(document.location.search);
 	divUrl = document.getElementById('url');
     divForwarder = document.getElementById('forwarder');
+    imgForwarder = document.getElementById('forwarderIcon');
     divContinue = document.getElementById('cmdContinue');
     divCancel = document.getElementById('cmdCancel');
 
@@ -21,7 +23,12 @@ function populate() {
     
     var forwarderUrl = document.createElement('a');
     forwarderUrl.href = params.forwarder;
-    divForwarder.textContent = forwarderUrl.hostname;    
+    divForwarder.textContent = forwarderUrl.hostname;
+
+    imgForwarder.src = forwarderUrl.protocol + "//" + forwarderUrl.host + "/favicon.ico";
+    imgForwarder.onerror = function () { 
+        this.style.display = "none";
+    }
 }
 
 function getQueryParams(qs) {
