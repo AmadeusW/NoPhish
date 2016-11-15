@@ -1,6 +1,6 @@
 # NoPhish
 
-Worried to click a URL shortner link? This apps allows you to check where the link is going to bring you before you end up in strange area of the Internet.
+Worried to click a URL shortener link? This apps allows you to check where the link is going to bring you before you end up in strange area of the Internet.
 
 This Google Chrome Extension is available on the Chrome Web Store - https://chrome.google.com/webstore/detail/nophish/ecmcphddmcmkejnbehfkdcekiepoagna?utm_source=github
 
