@@ -1,6 +1,6 @@
 {
   "name": "NoPhish",
-  "version": "0.5",
+  "version": "0.6",
   "description": "Allows you to verify where URL Shorteners redirects you",
   "manifest_version": 2,
   "browser_action": {

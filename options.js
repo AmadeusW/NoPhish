@@ -1,3 +1,4 @@
+var extension_id = chrome.runtime.id;
 
 function restoreOptions() {
   chrome.storage.sync.get({
@@ -36,3 +37,14 @@ document.addEventListener('DOMContentLoaded', restoreOptions);
 document.getElementById('save').addEventListener('click', saveOptions);
 document.getElementById('reloadDefaults').addEventListener('click', reloadDefaults);
 
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+
+    if (sender.id != extension_id) {
+      console.err({result: 'err', message: sender.id  + ' != ' + extension_id});
+    }
+    if (request.command == 'reloadConfig') {
+      restoreOptions();
+    }
+  }
+);

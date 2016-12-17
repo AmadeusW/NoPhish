@@ -2,6 +2,7 @@ var params = {}
 var divUrl = null;
 var divForwarder = null;
 var imgForwarder = null;
+var cmdAddShortener = null;
 var cmdContinue = null;
 var cmdCancel = null;
 function load() {
@@ -9,11 +10,13 @@ function load() {
 	divUrl = document.getElementById('url');
     divForwarder = document.getElementById('forwarder');
     imgForwarder = document.getElementById('forwarderIcon');
-    divContinue = document.getElementById('cmdContinue');
-    divCancel = document.getElementById('cmdCancel');
+    cmdAddShortener = document.getElementById('cmdAddShortener');
+    cmdContinue = document.getElementById('cmdContinue');
+    cmdCancel = document.getElementById('cmdCancel');
 
-    divContinue.addEventListener('click', proceedToWebsite);
-    divCancel.addEventListener('click', bringMeSomewhereSafe);
+    cmdAddShortener.addEventListener('click', addToShortener);
+    cmdContinue.addEventListener('click', proceedToWebsite);
+    cmdCancel.addEventListener('click', bringMeSomewhereSafe);
 
     populate();
 }
@@ -29,6 +32,38 @@ function populate() {
     imgForwarder.onerror = function () { 
         this.style.display = "none";
     }
+}
+
+function addToShortener() {
+    var cmd = {
+        command: "addShortener", 
+        arguments: {
+            url: params.url
+        }
+    };
+    chrome.runtime.sendMessage(cmd, function(res) {
+        if (res.result == 'added') {
+            var divResultMessage = document.createElement('div');
+            divResultMessage.classList.add('alert');
+            divResultMessage.classList.add('alert-success');
+            divResultMessage.textContent = "Domain: " + res.args.domain + " added to track list successfuly";
+            var messagesArea = document.getElementById('messages');
+            messagesArea.append(divResultMessage);
+            setTimeout(function() {
+                divResultMessage.remove();
+            }, 5000)
+        } else if (res.result == 'alreadyTracked') {
+            var divResultMessage = document.createElement('div');
+            divResultMessage.classList.add('alert');
+            divResultMessage.classList.add('alert-warning');
+            divResultMessage.textContent = "Domain: " + res.args.domain + " tracked already";
+            var messagesArea = document.getElementById('messages');
+            messagesArea.append(divResultMessage);
+            setTimeout(function() {
+                divResultMessage.remove();
+            }, 5000)
+        }
+    });
 }
 
 function getQueryParams(qs) {
@@ -54,7 +89,9 @@ function proceedToWebsite() {
         }
     };
     chrome.runtime.sendMessage(cmd, function(res) {
-        window.location = params.url;
+        if (res.result == 'ok') {
+            window.location = params.url;
+        }
     });
 }
 

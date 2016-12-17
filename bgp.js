@@ -54,20 +54,44 @@ chrome.browserAction.onClicked.addListener(function() {
 });
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    var senderUrl = document.createElement('a');
-    senderUrl.href = sender.tab.url;
 
-    if (!sender.hostname == extension_id) {
-      return sendResponse('err');
+    if (sender.id != extension_id) {
+      return sendResponse({result:'err', message: sender.id + ' != ' + extension_id});
     }
     if (request.command == 'authorize') {
       if (authorized_urls.indexOf(request.arguments.forwarder) == -1) {
         authorized_urls.push(request.arguments.forwarder);
       }
-      return sendResponse('ok');
+      return sendResponse({result: 'ok'});
     } else if (request.command == 'reloadConfig') {
       loadConfig();
+    } else if (request.command == 'addShortener') {
+      if (!request.arguments.url) {
+        return sendResponse({result: 'argumentMissing', args: {params: [ 'url' ]}});
+      }
+    
+      // Retrieve Domain Name
+      var url = document.createElement('a');
+      url.href = request.arguments.url;
+      var domain = url.hostname.toLowerCase();
+
+      // Checks if we already track this domain
+      if (!tracked_domains.find(function (i) { return i.toLowerCase() == domain; })) {
+        tracked_domains.push(domain);
+
+        chrome.storage.sync.set({'trackedDomains': tracked_domains}, function() {
+          var cmd = {
+            command: "reloadConfig", 
+          };
+          chrome.runtime.sendMessage(cmd);
+          return sendResponse({result: 'added', args: {domain: domain}});
+        });
+        return true; // Tells that the response will be async
+      } else {
+        return sendResponse({result: 'alreadyTracked', args: {domain: domain}});  
+      }
     } else {
-      return sendResponse('Invalid Command: ' + request.command);
+      return sendResponse({result: 'invalidCommand', args: {command: request.command}});
     }
-  });
+  }
+);
